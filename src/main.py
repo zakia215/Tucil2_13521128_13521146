@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import matplotlib.pyplot as plt
 
 def findDistance(a, b):
     res = 0
@@ -49,13 +50,38 @@ def findClosestPairOfThreePoints(points, dimension):
 
 if __name__ == "__main__":
     points = [
-        (2694, 1833, 770, 1879, 2186, 2165),
-        (2572, 2529, 2488, 2291, 2899, 1125),
-        (2733, 1659, 884, 1882, 2257, 1475),
-        (706, 97, 1258, 302, 384, 2354),
-        (2123, 1088, 1782, 134, 2460, 2444),
-        (178, 356, 695, 1686, 2627, 1733),
-        (1661, 664, 324, 1028, 2622, 1916),
+        (2694, 1833, 770),
+        (1879, 2186, 2165),
+        (2572, 2529, 2488),
+        (2291, 2899, 1125),
+        (2733, 1659, 884),
+        (1882, 2257, 1475),
+        (706, 97, 1258),
+        (302, 384, 2354),
+        (2123, 1088, 1782),
+        (134, 2460, 2444),
+        (178, 356, 695),
+        (1686, 2627, 1733),
+        (1661, 664, 324),
+        (1028, 2622, 1916),
     ]
 
-    print(findClosestPair(points, 7, 6))
+    closest_pair_3d = findClosestPair(points, 14, 3)
+    print(closest_pair_3d[:2])
+
+    numpied_points = np.array(points)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(projection = '3d')
+
+    for x, y, z in points:
+        if ((x, y, z) in closest_pair_3d[:2]) :
+            ax.scatter(x, y, z, marker='^', color='r')
+        else:    
+            ax.scatter(x, y, z, marker='o', color='g')
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    plt.show()
