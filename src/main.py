@@ -1,8 +1,15 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+import random
+
+
+timesEuclideanDistanceCalculated = 0
 
 def findDistance(a, b):
+    global timesEuclideanDistanceCalculated
+    timesEuclideanDistanceCalculated += 1
     res = 0
     for i in range(len(a)):
         res += (a[i] - b[i]) ** 2
@@ -49,25 +56,23 @@ def findClosestPairOfThreePoints(points, dimension):
     return closest + (min,)
 
 if __name__ == "__main__":
-    points = [
-        (2694, 1833, 770),
-        (1879, 2186, 2165),
-        (2572, 2529, 2488),
-        (2291, 2899, 1125),
-        (2733, 1659, 884),
-        (1882, 2257, 1475),
-        (706, 97, 1258),
-        (302, 384, 2354),
-        (2123, 1088, 1782),
-        (134, 2460, 2444),
-        (178, 356, 695),
-        (1686, 2627, 1733),
-        (1661, 664, 324),
-        (1028, 2622, 1916),
-    ]
+    nPoints = int(input("Enter number of points generated: "))
+    dimPoints = int(input("Enter dimension of points generated: "))
 
-    closest_pair_3d = findClosestPair(points, 14, 3)
+    points = []
+
+    for i in range(int(nPoints)):
+        points.append(tuple([random.randint(0, 1000) for i in range(int(dimPoints))]))
+
+    start = time.time()
+    
+    closest_pair_3d = findClosestPair(points, nPoints, dimPoints)
+
+    end = time.time()
     print(closest_pair_3d[:2])
+    print("Distance : ", closest_pair_3d[2])
+    print(timesEuclideanDistanceCalculated, "times Euclidean distance calculated")
+    print("Time taken: ",'%.15f' % (end - start), "seconds")
 
     numpied_points = np.array(points)
 
