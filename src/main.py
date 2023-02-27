@@ -7,6 +7,13 @@ import random
 
 timesEuclideanDistanceCalculated = 0
 
+# def quickSort(arr, low, high):
+#     if low < high:
+#         pi = partition(arr, low, high)
+#         quickSort(arr, low, pi - 1)
+#         quickSort(arr, pi + 1, high)
+
+
 def findDistance(a, b):
     global timesEuclideanDistanceCalculated
     timesEuclideanDistanceCalculated += 1
@@ -17,10 +24,10 @@ def findDistance(a, b):
 
 def findClosestPair(points, n, dimension):
     if (n <= 3):
-        return findClosestPairOfThreePoints(points, dimension)
+        return findClosestPairOfThreePoints(points)
     else:
         # Sort the points on their abses
-        sorted_points = points.sort(key=lambda p: p[0])
+        points.sort(key=lambda p: p[0])
 
         # Split the index into two arbitrary area, s1 and s2 and find the shortest pair in those two areas
         mid = n // 2
@@ -45,7 +52,7 @@ def findClosestPair(points, n, dimension):
         return shortest_s1_s2
 
 
-def findClosestPairOfThreePoints(points, dimension):
+def findClosestPairOfThreePoints(points):
     closest = ()
     min = float('inf')
     for i in range(len(points)):
@@ -60,33 +67,56 @@ if __name__ == "__main__":
     dimPoints = int(input("Enter dimension of points generated: "))
 
     points = []
+    # points = [(49, -364), (647, 422), (907, -978), (-802, 399), (946, 958), (-239, -954), (682, 516), (427, -956), (-125, -130), (-913, -386)]
 
     for i in range(int(nPoints)):
-        points.append(tuple([random.randint(0, 1000) for i in range(int(dimPoints))]))
+        points.append(tuple([random.randint(-1000, 1000) for i in range(int(dimPoints))]))
 
-    start = time.time()
+    # Divide and Conquer
+    startDNC = time.time()
     
     closest_pair_3d = findClosestPair(points, nPoints, dimPoints)
+    timesEuclideanDistanceCalculatedDNC = timesEuclideanDistanceCalculated
 
-    end = time.time()
-    print(closest_pair_3d[:2])
+    endDNC = time.time()
+
+    # Brute Force
+
+    startBF = time.time()
+
+    timesEuclideanDistanceCalculated = 0
+
+    closest_pair_brute = findClosestPairOfThreePoints(points)
+    timesEuclideanDistanceCalculatedBF = timesEuclideanDistanceCalculated
+
+    endBF = time.time()
+    
+    print('\n'+ str(closest_pair_3d[:2]))
     print("Distance : ", closest_pair_3d[2])
-    print(timesEuclideanDistanceCalculated, "times Euclidean distance calculated")
-    print("Time taken: ",'%.15f' % (end - start), "seconds")
+    print(timesEuclideanDistanceCalculatedDNC, "times Euclidean distance calculated")
+    print("Time taken: ",'%.15f' % (endDNC - startDNC), "seconds")
+    
 
-    numpied_points = np.array(points)
+    print('\n' + str(closest_pair_brute[:2]))
+    print("Distance : ", closest_pair_brute[2])
+    print(timesEuclideanDistanceCalculatedBF, "times Euclidean distance calculated")
+    print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
 
-    fig = plt.figure()
-    ax = fig.add_subplot(projection = '3d')
 
-    for x, y, z in points:
-        if ((x, y, z) in closest_pair_3d[:2]) :
-            ax.scatter(x, y, z, marker='^', color='r')
-        else:    
-            ax.scatter(x, y, z, marker='o', color='g')
+    if(dimPoints == 3):
+        numpied_points = np.array(points)
 
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
+        fig = plt.figure()
+        ax = fig.add_subplot(projection = '3d')
 
-    plt.show()
+        for x, y, z in points:
+            if ((x, y, z) in closest_pair_3d[:2]) :
+                ax.scatter(x, y, z, marker='^', color='r')
+            else:    
+                ax.scatter(x, y, z, marker='o', color='g')
+
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+
+        plt.show()
