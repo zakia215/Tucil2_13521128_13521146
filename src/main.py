@@ -20,6 +20,7 @@ def findDistance(a, b):
     res = 0
     for i in range(len(a)):
         res += (a[i] - b[i]) ** 2
+    timesEucli += 1
     return math.sqrt(res)
 
 def findClosestPair(points, n, dimension):
@@ -35,14 +36,14 @@ def findClosestPair(points, n, dimension):
         s2 = points[mid:]
         shortest_s1 = findClosestPair(s1, len(s1), dimension)
         shortest_s2 = findClosestPair(s2, len(s2), dimension)
-        if (shortest_s1[2] >= shortest_s2[2]):
+        if (shortest_s1[2] >= shortest_s2[2]) :
             shortest_s1_s2 = shortest_s2
         else :
             shortest_s1_s2 = shortest_s1
         
         # Find points in 'slab' such that those points have distance shorter than or equal to shortest_s1_s2 to the point in the mid index
         slab = [p for p in points if abs(p[0] - points[mid][0]) < shortest_s1_s2[2]]
-        slab.sort(key=lambda p: p[0])
+        slab.sort(key=lambda p: p[1])
 
         for i in range(len(slab)):
             for j in range(i + 1, len(slab)):
@@ -63,6 +64,7 @@ def findClosestPairOfThreePoints(points):
     return closest + (min,)
 
 if __name__ == "__main__":
+
     nPoints = int(input("Enter number of points generated: "))
     dimPoints = int(input("Enter dimension of points generated: "))
 
@@ -103,20 +105,32 @@ if __name__ == "__main__":
     print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
 
 
-    if(dimPoints == 3):
-        numpied_points = np.array(points)
+    points = [(random.randint(-1000, 1000), random.randint(-1000, 1000), random.randint(-1000, 1000)) for i in range(1000)]
+    
+    start_time = time.time()
+    closest_pair_3d = findClosestPair(points, 1000, 3)
+    end_time = time.time()
+    print("Closest points:")
+    print(closest_pair_3d[0])
+    print(closest_pair_3d[1])
+    print("Distance:", closest_pair_3d[2])
+    print("Euclidian operation:", timesEucli)
+    print("Execution time:", (end_time - start_time))
 
-        fig = plt.figure()
-        ax = fig.add_subplot(projection = '3d')
 
-        for x, y, z in points:
-            if ((x, y, z) in closest_pair_3d[:2]) :
-                ax.scatter(x, y, z, marker='^', color='r')
-            else:    
-                ax.scatter(x, y, z, marker='o', color='g')
+    # numpied_points = np.array(points)
 
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Z')
+    # fig = plt.figure()
+    # ax = fig.add_subplot(projection = '3d')
 
-        plt.show()
+    # for x, y, z in points:
+    #     if ((x, y, z) in closest_pair_3d[:2]) :
+    #         ax.scatter(x, y, z, marker='^', color='r')
+    #     else:    
+    #         ax.scatter(x, y, z, marker='o', color='g')
+
+    # ax.set_xlabel('X')
+    # ax.set_ylabel('Y')
+    # ax.set_zlabel('Z')
+
+    # plt.show()
