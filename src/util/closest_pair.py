@@ -70,4 +70,4 @@ def findClosestPairOfBF(points):
                 closest_points = [(points[i], points[j], min)]
             elif tempDistance == min:
                 closest_points.append((points[i], points[j], min))
-    return closest_points;
+    return closest_points

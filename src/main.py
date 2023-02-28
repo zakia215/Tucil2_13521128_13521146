@@ -9,7 +9,7 @@ from util import closest_pair, display
 
 if __name__ == "__main__":
 
-    sys.setrecursionlimit(10000)
+    sys.setrecursionlimit(1000000000)
     nPoints = int(input("Enter number of points generated: "))
     while nPoints < 2:
         nPoints = int(input("Invalid number,Enter number of points generated: "))
@@ -40,6 +40,7 @@ if __name__ == "__main__":
     endBF = time.time()
     
     print()
+    print("Closest pair of points using Divide and Conquer: ")
     for i in range(len(closest_pair_3d)):
         print(closest_pair_3d[i][:2])
     print("Distance : ", closest_pair_3d[0][2])
@@ -48,6 +49,7 @@ if __name__ == "__main__":
     
 
     print()
+    print("Closest pair of points using Brute Force: ")
     for i in range(len(closest_pair_brute)):
         print(closest_pair_brute[i][:2])
     print("Distance : ", closest_pair_brute[0][2])

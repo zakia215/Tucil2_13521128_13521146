@@ -9,9 +9,13 @@ def display(points, closest_pair, dimension):
         ax = fig.add_subplot(projection = '3d')
 
         for x, y, z in points:
-            if ((x, y, z) in closest_pair[:2]) :
-                ax.scatter(x, y, z, marker='^', color='r')
-            else:    
+            closestPlotted = False
+            for i in range(len(closest_pair)):
+                if ((x, y, z) in closest_pair[i][:2]) :
+                    ax.scatter(x, y, z, marker='^', color='r')
+                    closestPlotted = True
+
+            if not closestPlotted:
                 ax.scatter(x, y, z, marker='o', color='g')
 
         ax.set_xlabel('X')
