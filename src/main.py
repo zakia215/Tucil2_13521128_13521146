@@ -13,7 +13,7 @@ def findDistance(a, b):
     res = 0
     for i in range(len(a)):
         res += (a[i] - b[i]) ** 2
-    timesEucli += 1
+    timesEuclidianDistanceCalculated += 1
     return math.sqrt(res)
 
 def findClosestPair(points, n, dimension):
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     print(closest_pair_3d[0])
     print(closest_pair_3d[1])
     print("Distance:", closest_pair_3d[2])
-    print("Euclidian operation:", timesEucli)
+    print("Euclidian operation:", timesEuclidianDistanceCalculated)
     print("Execution time:", (end_time - start_time))
 
 
