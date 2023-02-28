@@ -7,20 +7,28 @@ import random
 
 timesEuclideanDistanceCalculated = 0
 
-# def quickSort(arr, low, high):
-#     if low < high:
-#         pi = partition(arr, low, high)
-#         quickSort(arr, low, pi - 1)
-#         quickSort(arr, pi + 1, high)
+def quickSort(arr, low, high, tuple_att_to_sort):
+    if (low < high):
+        pi = partition(arr, low, high, tuple_att_to_sort)
+        quickSort(arr, low, pi - 1, tuple_att_to_sort)
+        quickSort(arr, pi + 1, high, tuple_att_to_sort)
 
+def partition(arr, low, high, tuple_att_to_sort):
+    i = low - 1
+    pivot = arr[high][tuple_att_to_sort]
+    for j in range(low, high):
+        if (arr[j][tuple_att_to_sort] < pivot):
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
 
 def findDistance(a, b):
     global timesEuclideanDistanceCalculated
-    timesEuclideanDistanceCalculated += 1
     res = 0
     for i in range(len(a)):
         res += (a[i] - b[i]) ** 2
-    timesEucli += 1
+    timesEuclideanDistanceCalculated += 1
     return math.sqrt(res)
 
 def findClosestPair(points, n, dimension):
@@ -28,7 +36,7 @@ def findClosestPair(points, n, dimension):
         return findClosestPairOfThreePoints(points)
     else:
         # Sort the points on their abses
-        points.sort(key=lambda p: p[0])
+        quickSort(points, 0, len(points) - 1, 0)
 
         # Split the index into two arbitrary area, s1 and s2 and find the shortest pair in those two areas
         mid = n // 2
@@ -42,14 +50,22 @@ def findClosestPair(points, n, dimension):
             shortest_s1_s2 = shortest_s1
         
         # Find points in 'slab' such that those points have distance shorter than or equal to shortest_s1_s2 to the point in the mid index
-        slab = [p for p in points if abs(p[0] - points[mid][0]) < shortest_s1_s2[2]]
-        slab.sort(key=lambda p: p[1])
+        slab_s1 = [p for p in s1 if abs(p[0] - points[mid][0]) < shortest_s1_s2[2] / 2]
+        quickSort(slab_s1, 0, len(slab_s1) - 1, 1)
+        slab_s2 = [p for p in s2 if abs(p[0] - points[mid][0]) < shortest_s1_s2[2] / 2]
+        quickSort(slab_s2, 0, len(slab_s2) - 1, 1)
 
-        for i in range(len(slab)):
-            for j in range(i + 1, len(slab)):
-                if findDistance(slab[i], slab[j]) < shortest_s1_s2[2]:
-                    shortest_s1_s2 = (slab[i], slab[j], findDistance(slab[i], slab[j]))
-        
+        for i in range(len(slab_s1)):
+            for j in range(len(slab_s2)):
+                check = True
+                for k in range(dimension):
+                    if abs(slab_s1[i][k] - slab_s2[j][k]) > shortest_s1_s2[2]:
+                        check = False
+                if (check) :
+                    tempDistance = findDistance(slab_s1[i], slab_s2[j])
+                    if tempDistance < shortest_s1_s2[2]:
+                        shortest_s1_s2 = (slab_s1[i], slab_s2[j], tempDistance)
+                
         return shortest_s1_s2
 
 
@@ -58,13 +74,15 @@ def findClosestPairOfThreePoints(points):
     min = float('inf')
     for i in range(len(points)):
         for j in range(i+1, len(points)):
-            if findDistance(points[i], points[j]) < min:
-                min = findDistance(points[i], points[j])
+            tempDistance = findDistance(points[i], points[j])
+            if tempDistance < min:
+                min = tempDistance
                 closest = (points[i], points[j])
     return closest + (min,)
 
 if __name__ == "__main__":
 
+    
     nPoints = int(input("Enter number of points generated: "))
     dimPoints = int(input("Enter dimension of points generated: "))
 
@@ -106,16 +124,6 @@ if __name__ == "__main__":
 
 
     points = [(random.randint(-1000, 1000), random.randint(-1000, 1000), random.randint(-1000, 1000)) for i in range(1000)]
-    
-    start_time = time.time()
-    closest_pair_3d = findClosestPair(points, 1000, 3)
-    end_time = time.time()
-    print("Closest points:")
-    print(closest_pair_3d[0])
-    print(closest_pair_3d[1])
-    print("Distance:", closest_pair_3d[2])
-    print("Euclidian operation:", timesEucli)
-    print("Execution time:", (end_time - start_time))
 
 
     # numpied_points = np.array(points)
