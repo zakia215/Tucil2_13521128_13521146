@@ -10,13 +10,16 @@ from util import closest_pair, display
 if __name__ == "__main__":
 
     sys.setrecursionlimit(10000)    
+
     nPoints = int(input("Enter number of points generated: "))
+    while nPoints < 2:
+        nPoints = int(input("Invalid number,Enter number of points generated: "))
     dimPoints = int(input("Enter dimension of points generated: "))
 
     points = []
 
     for i in range(int(nPoints)):
-        points.append(tuple([random.randint(-1000, 1000) for i in range(int(dimPoints))]))
+        points.append(tuple([random.uniform(-1000, 1000) for i in range(int(dimPoints))]))
 
     # Divide and Conquer
     startDNC = time.time()
