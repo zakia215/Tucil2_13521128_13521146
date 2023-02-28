@@ -9,7 +9,7 @@ from util import closest_pair, display
 
 if __name__ == "__main__":
 
-    sys.setrecursionlimit(1000000000)
+    sys.setrecursionlimit(1000000)
     nPoints = int(input("Enter number of points generated: "))
     while nPoints < 2:
         nPoints = int(input("Invalid number,Enter number of points generated: "))
@@ -28,17 +28,6 @@ if __name__ == "__main__":
 
     endDNC = time.time()
 
-    # Brute Force
-
-    startBF = time.time()
-
-    closest_pair.timesEuclideanDistanceCalculated = 0
-
-    closest_pair_brute = closest_pair.findClosestPairOfBF(points)
-    timesEuclideanDistanceCalculatedBF = closest_pair.timesEuclideanDistanceCalculated
-
-    endBF = time.time()
-    
     print()
     print("Closest pair of points using Divide and Conquer: ")
     for i in range(len(closest_pair_3d)):
@@ -46,16 +35,27 @@ if __name__ == "__main__":
     print("Distance : ", closest_pair_3d[0][2])
     print(timesEuclideanDistanceCalculatedDNC, "times Euclidean distance calculated")
     print("Time taken: ",'%.15f' % (endDNC - startDNC), "seconds")
-    
 
-    print()
-    print("Closest pair of points using Brute Force: ")
-    for i in range(len(closest_pair_brute)):
-        print(closest_pair_brute[i][:2])
-    print("Distance : ", closest_pair_brute[0][2])
-    print(timesEuclideanDistanceCalculatedBF, "times Euclidean distance calculated")
-    print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
+    # Brute Force
+
+    if (nPoints <= 4000) :
+        startBF = time.time()
+
+        closest_pair.timesEuclideanDistanceCalculated = 0
+
+        closest_pair_brute = closest_pair.findClosestPairOfBF(points)
+        timesEuclideanDistanceCalculatedBF = closest_pair.timesEuclideanDistanceCalculated
+
+        endBF = time.time()
+
+        print()
+        for i in range(len(closest_pair_brute)):
+            print(closest_pair_brute[i][:2])
+        print("Distance : ", closest_pair_brute[0][2])
+        print(timesEuclideanDistanceCalculatedBF, "times Euclidean distance calculated")
+        print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
 
     print("Device used: " + platform.processor())
 
-    display.display(points, closest_pair_3d, dimPoints)
+    if (nPoints <= 4000):
+        display.display(points, closest_pair_3d, dimPoints)

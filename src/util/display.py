@@ -3,19 +3,18 @@ import matplotlib.pyplot as plt
 
 def display(points, closest_pair, dimension):
     if (dimension == 3):
-        numpied_points = np.array(points)
+        red_points = []
+        for p in closest_pair:
+            for q in range(len(p) - 1):
+                red_points.append(p[q])
 
         fig = plt.figure()
         ax = fig.add_subplot(projection = '3d')
 
         for x, y, z in points:
-            closestPlotted = False
-            for i in range(len(closest_pair)):
-                if ((x, y, z) in closest_pair[i][:2]) :
-                    ax.scatter(x, y, z, marker='^', color='r')
-                    closestPlotted = True
-
-            if not closestPlotted:
+            if ((x, y, z) in red_points) :
+                ax.scatter(x, y, z, marker='^', color='r')
+            else:    
                 ax.scatter(x, y, z, marker='o', color='g')
 
         ax.set_xlabel('X')
