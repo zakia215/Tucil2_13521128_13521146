@@ -1,18 +1,19 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 import time
-from datetime import datetime
+import random
 
-euclidian_count = 0
+
+timesEuclideanDistanceCalculated = 0
 
 def findDistance(a, b):
-    global euclidian_count
+    global timesEuclideanDistanceCalculated
+    timesEuclideanDistanceCalculated += 1
     res = 0
     for i in range(len(a)):
         res += (a[i] - b[i]) ** 2
-    euclidian_count += 1
+    timesEucli += 1
     return math.sqrt(res)
 
 def findClosestPair(points, n, dimension):
@@ -57,7 +58,23 @@ def findClosestPairOfThreePoints(points):
 
 if __name__ == "__main__":
 
-    random.seed(datetime.now().timestamp())
+    nPoints = int(input("Enter number of points generated: "))
+    dimPoints = int(input("Enter dimension of points generated: "))
+
+    points = []
+
+    for i in range(int(nPoints)):
+        points.append(tuple([random.randint(0, 1000) for i in range(int(dimPoints))]))
+
+    start = time.time()
+    
+    closest_pair_3d = findClosestPair(points, nPoints, dimPoints)
+
+    end = time.time()
+    print(closest_pair_3d[:2])
+    print("Distance : ", closest_pair_3d[2])
+    print(timesEuclideanDistanceCalculated, "times Euclidean distance calculated")
+    print("Time taken: ",'%.15f' % (end - start), "seconds")
 
     points = [(random.randint(-1000, 1000), random.randint(-1000, 1000), random.randint(-1000, 1000)) for i in range(1000)]
     
@@ -68,7 +85,7 @@ if __name__ == "__main__":
     print(closest_pair_3d[0])
     print(closest_pair_3d[1])
     print("Distance:", closest_pair_3d[2])
-    print("Euclidian operation:", euclidian_count)
+    print("Euclidian operation:", timesEucli)
     print("Execution time:", (end_time - start_time))
 
 
