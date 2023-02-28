@@ -7,11 +7,6 @@ import random
 
 timesEuclideanDistanceCalculated = 0
 
-# def quickSort(arr, low, high):
-#     if low < high:
-#         pi = partition(arr, low, high)
-#         quickSort(arr, low, pi - 1)
-#         quickSort(arr, pi + 1, high)
 
 
 def findDistance(a, b):
@@ -103,19 +98,6 @@ if __name__ == "__main__":
     print("Distance : ", closest_pair_brute[2])
     print(timesEuclideanDistanceCalculatedBF, "times Euclidean distance calculated")
     print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
-
-
-    points = [(random.randint(-1000, 1000), random.randint(-1000, 1000), random.randint(-1000, 1000)) for i in range(1000)]
-    
-    start_time = time.time()
-    closest_pair_3d = findClosestPair(points, 1000, 3)
-    end_time = time.time()
-    print("Closest points:")
-    print(closest_pair_3d[0])
-    print(closest_pair_3d[1])
-    print("Distance:", closest_pair_3d[2])
-    print("Euclidian operation:", timesEuclidianDistanceCalculated)
-    print("Execution time:", (end_time - start_time))
 
 
     # numpied_points = np.array(points)
