@@ -13,7 +13,9 @@ divide and conquer algorithm as well as brute force algorithm in order to compar
 1. Open terminal
 2. Navigate to the directory of this repository in your device
 3. Run the following in the terminal
-   	`python src/main.py`
+   	```bash
+    $ python src/main.py
+    ```
 
 ## Author
    NIM    | Nama
