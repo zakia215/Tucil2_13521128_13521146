@@ -9,7 +9,7 @@ from util import closest_pair, display
 
 if __name__ == "__main__":
 
-    sys.setrecursionlimit(10000)    
+    sys.setrecursionlimit(10000)
     nPoints = int(input("Enter number of points generated: "))
     dimPoints = int(input("Enter dimension of points generated: "))
 
@@ -37,14 +37,18 @@ if __name__ == "__main__":
 
     endBF = time.time()
     
-    print('\n'+ str(closest_pair_3d[:2]))
-    print("Distance : ", closest_pair_3d[2])
+    print()
+    for i in range(len(closest_pair_3d)):
+        print(closest_pair_3d[i][:2])
+    print("Distance : ", closest_pair_3d[0][2])
     print(timesEuclideanDistanceCalculatedDNC, "times Euclidean distance calculated")
     print("Time taken: ",'%.15f' % (endDNC - startDNC), "seconds")
     
 
-    print('\n' + str(closest_pair_brute[:2]))
-    print("Distance : ", closest_pair_brute[2])
+    print()
+    for i in range(len(closest_pair_brute)):
+        print(closest_pair_brute[i][:2])
+    print("Distance : ", closest_pair_brute[0][2])
     print(timesEuclideanDistanceCalculatedBF, "times Euclidean distance calculated")
     print("Time taken: ",'%.15f' % (endBF - startBF), "seconds")
 

@@ -24,10 +24,17 @@ def findClosestPair(points, n, dimension):
         s2 = points[mid:]
         shortest_s1 = findClosestPair(s1, len(s1), dimension)
         shortest_s2 = findClosestPair(s2, len(s2), dimension)
-        if (shortest_s1[2] >= shortest_s2[2]) :
-            shortest_s1_s2 = shortest_s2
+        closest_points = []
+        if (shortest_s1[0][2] > shortest_s2[0][2]) :
+            shortest_s1_s2 = shortest_s2[0]
+            closest_points.append(shortest_s1_s2)
+        elif (shortest_s1[0][2] < shortest_s2[0][2]) :
+            shortest_s1_s2 = shortest_s1[0]
+            closest_points.append(shortest_s1_s2)
         else :
-            shortest_s1_s2 = shortest_s1
+            shortest_s1_s2 = shortest_s1[0]
+            closest_points = shortest_s1 + shortest_s2
+        
         
         # Find points in 'slab' such that those points have distance shorter than or equal to shortest_s1_s2 to the point in the mid index
         slab_s1 = [p for p in s1 if abs(p[0] - points[mid][0]) < shortest_s1_s2[2]]
@@ -45,17 +52,22 @@ def findClosestPair(points, n, dimension):
                     tempDistance = findDistance(slab_s1[i], slab_s2[j])
                     if tempDistance < shortest_s1_s2[2]:
                         shortest_s1_s2 = (slab_s1[i], slab_s2[j], tempDistance)
+                        closest_points = [shortest_s1_s2]
+                    elif tempDistance == shortest_s1_s2:
+                        closest_points.append((slab_s1, slab_s2, tempDistance))
                 
-        return shortest_s1_s2
+        return closest_points
 
 
 def findClosestPairOfBF(points):
-    closest = ()
+    closest_points = []
     min = float('inf')
     for i in range(len(points)):
         for j in range(i+1, len(points)):
             tempDistance = findDistance(points[i], points[j])
             if tempDistance < min:
                 min = tempDistance
-                closest = (points[i], points[j])
-    return closest + (min,)
+                closest_points = [(points[i], points[j], min)]
+            elif tempDistance == min:
+                closest_points.append((points[i], points[j], min))
+    return closest_points;
