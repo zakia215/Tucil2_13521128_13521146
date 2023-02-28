@@ -6,8 +6,11 @@ divide and conquer algorithm as well as brute force algorithm in order to compar
 
 ## Requirement
 1. Windows operating system
-2. [Python](https://www.example.com)
-3. [Matplotlib library](https://www.example.com)
+2. [Python](https://www.python.org/downloads/)
+3. [Matplotlib library](https://pypi.org/project/matplotlib/)
+   ```powershell
+    pip install matplotlib
+    ```
 
 ## How to Use the program
 1. Open terminal
